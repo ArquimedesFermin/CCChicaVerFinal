@@ -1,0 +1,111 @@
+﻿@model CChica.Models.EgresoIngreso
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<h2>Eliminar</h2>
+@if (ViewBag.auten != false)
+{
+
+    if (ViewBag.Validacion == false || User.IsInRole("admin"))
+    {
+        <h3>Desea eliminar este registro?</h3>
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.AddCajaChica.IdentityCajaChica)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.AddCajaChica.IdentityCajaChica)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.TipoEstado.Estado)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TipoEstado.Estado)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Dinero)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Dinero)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Fecha)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Time)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Time)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Concepto)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Concepto)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Descripcion)
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Eliminar" class="btn btn-default" /> |
+
+                    <a href="@Url.Action("ES", new { id = ViewBag.consulta })" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver atrás </a>
+
+
+
+
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+        <h1>Información</h1>
+        <h2>Esta caja chica está validada</h2>
+        <a href="@Url.Action("ES", new { id = ViewBag.consulta })" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver atrás </a>
+
+    }
+}
+else
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+
+        <h2>Este usuario no tiene permiso para eliminar esta caja chica, solo el usuario @ViewBag.Usuario tiene permiso </h2>
+        <h3>Por favor cerrar la sesión por cuestiones de seguridad</h3>
+
+        <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default">Cerrar sesión </a>
+
+    }
+}

@@ -1,0 +1,85 @@
+﻿@model CChica.Models.EgresoIngreso
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<h2>Eliminar</h2>
+
+<h3>Desea eliminar este registro?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AddCajaChica.IdentityCajaChica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddCajaChica.IdentityCajaChica)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoEstado.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoEstado.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dinero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dinero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Concepto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Concepto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+
+            <a href="@Url.Action("ES",new {id= ViewBag.consulta })" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver atrás </a>
+
+
+
+
+        </div>
+    }
+</div>

@@ -1,0 +1,26 @@
+﻿@using ReportViewerForMvc;
+
+@{
+    ViewBag.Title = "Informe";
+}
+
+<h2>Informe de caja chica:</h2>
+
+<div>
+    <iframe frameborder="0" id="r5403d777-1376-4085-96ff-59b9f4a7f43d"  src="~/ReportViewerWebForm.aspx" style="
+    width: 1155px;
+    height: 665px;   
+">
+        @if (ViewBag.ReportViewer != null)
+        {
+            @Html.ReportViewer(ViewBag.ReportViewer as Microsoft.Reporting.WebForms.ReportViewer);
+        }
+    </iframe>
+</div>
+<div>
+
+    <a href="@Url.Action("ES","AddCajaChica",new { id = ViewBag.Consulta })" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver atrás </a>
+
+
+
+</div>

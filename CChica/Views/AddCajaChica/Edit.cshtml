@@ -1,0 +1,176 @@
+﻿@model CChica.Models.AddCajaChica
+
+@{
+    ViewBag.Title = "Editar";
+
+    ViewBag.Url = "/AddCajaChica/Edit?id=" + Model.Id + "&url=true";
+}
+
+<h2>Editar</h2>
+
+
+@if (ViewBag.auten != false)
+{
+
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+
+        if (ViewBag.Validacion == false || User.IsInRole("admin"))
+        {
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id, new { @id = "id" })
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdentityCajaChica, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.IdentityCajaChica, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.IdentityCajaChica, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.nameCajaChica, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.nameCajaChica, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.nameCajaChica, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CreadoPor, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CreadoPor, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CreadoPor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Validada, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.Validada, new { @class = "form-control", @id = "vali" })
+                        @*@Html.EditorFor(model => model.Validada, new { htmlAttributes = new { @class = "form-control", @id = "vali" } })*@
+                        @Html.ValidationMessageFor(model => model.Validada, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Guardar" class="btn btn-default" />
+                    </div>
+                </div>
+
+                <div>
+                    <a href="@Url.Action("Index")" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver atrás </a>
+
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.fecha, "", new { @class = "form-control", @type = "hidden" })
+                        @Html.ValidationMessageFor(model => model.fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.CierreCaja, "", new { @class = "form-control", @type = "hidden" })
+                        @Html.ValidationMessageFor(model => model.CierreCaja, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.FechaCierre, "", new { @class = "form-control", @type = "hidden" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.AperturaCaja, new { htmlAttributes = new { @class = "form-control", @type = "hidden" } })
+                        @Html.ValidationMessageFor(model => model.AperturaCaja, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.fechaApertura, "", new
+                        {
+                            @type = "hidden",
+                            @class = "form-control"
+                        })
+                        @Html.ValidationMessageFor(model => model.fechaApertura, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+        }
+        else
+        {
+            <h1>Información</h1>
+            <h2>Esta caja chica está validada</h2>
+
+            <div>
+
+                <a href="@Url.Action("Index")" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver atrás </a>
+
+
+
+            </div>
+        }
+    }
+
+    <script type="text/javascript">
+
+
+
+
+    $("#vali").click(function (i) {
+
+
+          var checkBox = document.getElementById("vali");
+
+        if (checkBox.checked == true){
+    var a = "true";
+  } else {
+    var a = "false";
+  }
+
+        var url = "@Url.Action("Login","Account",new { returnUrl = "/AddCajaChica/Edit?id=" +  Model.Id + "&url=true&chk=false"})";
+
+
+        @*var url = "@Url.Action("Login","Account",new { returnUrl = "/CChica/AddCajaChica/Edit?id=" +  Model.Id + "&url=true&chk=false"})";*@
+
+        urlReplace = url.replace("false", a);
+
+        window.location.href = urlReplace;
+
+	});
+
+
+
+
+    </script>
+}
+
+else
+{
+
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+
+        <h2>Este usuario no tiene permiso para editar esta caja chica, solo el usuario @ViewBag.Usuario tiene permiso </h2>
+        <h3>Por favor cerrar la sesión por cuestiones de seguridad</h3>
+
+        <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default">Cerrar sesión </a>
+
+    }
+}

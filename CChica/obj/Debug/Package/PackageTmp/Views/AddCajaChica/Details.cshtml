@@ -1,0 +1,68 @@
+﻿@model CChica.Models.AddCajaChica
+    
+
+@{
+    /**/
+
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <div class="form-inline">
+        <h4> Detalles</h4>
+
+        <a href="@Url.Action("addIngreso","CProc",new {indentityCC=Model.IdentityCajaChica })" class="btn btn-primary">   <span class="glyphicon glyphicon-plus" aria-hidden="true"> Ingresar</span></a>
+
+        <a href="@Url.Action("addGasto","CProc",new {indentityCC=Model.IdentityCajaChica})" class="btn btn-primary"> <span class="glyphicon glyphicon-minus" aria-hidden="true"> Gastos</span></a>
+    </div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdentityCajaChica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdentityCajaChica)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreadoPor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreadoPor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Validada)
+        </dt>
+
+
+        <dd>
+
+            @if (Convert.ToBoolean(Model.Validada) == false)
+            {
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+
+            }
+            else
+            {
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            }
+        </dd>
+
+    </dl>
+
+
+
+
+</div>
+<p>
+
+    <a href="@Url.Action("Edit",new {id= Model.Id })" class="btn btn-default"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar </a>
+    |
+    <a href="@Url.Action("Index")" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver atrás </a>
+
+</p>

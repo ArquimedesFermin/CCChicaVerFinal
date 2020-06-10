@@ -1,0 +1,46 @@
+﻿@model CChica.Models.AddCajaChica
+
+@{
+    ViewBag.Title = "Crear";
+}
+
+<h2>Crear Caja Chica</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nameCajaChica, htmlAttributes: new { @class = "control-label col-md-2 " })
+            <div class="col-sm-10">
+                @Html.EditorFor(model => model.nameCajaChica, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nameCajaChica, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar" class="btn btn-default" />
+            </div>
+
+        </div>
+        <div>
+
+            <a href="@Url.Action("Index")" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver atrás </a>
+
+
+
+        </div>
+    </div>
+}
+
+

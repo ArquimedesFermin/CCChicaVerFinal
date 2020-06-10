@@ -1,0 +1,59 @@
+﻿@model CChica.Models.AddCajaChica
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<h2>Eliminar</h2>
+
+<h3>Desea eliminar este registro?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdentityCajaChica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdentityCajaChica)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nameCajaChica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nameCajaChica)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreadoPor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreadoPor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Validada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Validada)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    <input type="submit" value="Eliminar" class="btn btn-default" /> |
+
+    <a href="@Url.Action("Index")" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver atrás </a>
+
+
+ 
+</div>
+    }
+</div>

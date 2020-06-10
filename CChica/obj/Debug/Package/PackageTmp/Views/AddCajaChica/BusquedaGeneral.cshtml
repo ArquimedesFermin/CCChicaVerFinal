@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewBag.Title = "BusquedaGeneral";
+}
+
+<h3>Busqueda Generar de caja chica</h3>
+<hr>
+@*<form class="form-inline">
+
+    <label>Buscar por concepto: </label>
+    <input type="text" class="form-control" id="search" placeholder="Buscar" />
+    <button type="button" class="form-control" onclick="funcccc()">Buscar  </button>
+
+
+
+</form>
+
+<hr>*@
+
+
+<table  id="table-users" class="table table-responsive table-hover">
+    <thead>
+        <tr>
+
+            <th>
+                Codigo de caja chica
+            </th>
+            <th>
+                Fecha/Hora
+            </th>
+
+            <th>
+                Concepto
+            </th>
+            <th>
+                Ingreso
+            </th>
+            <th>
+                Gasto
+            </th>
+
+            <th>
+                Descripción
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @*<tbody id="contenido">
+    </tbody>*@
+
+</table>
+
+<div>
+
+    <a href="@Url.Action("Index")" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver atrás </a>
+
+
+
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+
+       $('#table-users').DataTable({
+        //     destroy: true,
+        //Responsive: true,
+           "order": [[ 0, "desc" ]],
+
+
+
+
+
+        'ajax': {
+
+            "url": '@Url.Action("BusquedaGeneralJ")',
+            "type": "POST",
+            "contentType": "application/json; charset=utf-8",
+            "dataType": "json",
+            "dataSrc":""
+
+
+        },
+         'columns':
+        [
+                 {
+                
+                      "data": null,
+
+                     "render": function (data, type, full, meta) {
+                         return '<a href="../AddCajaChica/ES/' + full['idCajaChica'] + '">' + full['idCajaChica'] + '</a>';
+
+                     }
+                 },
+            {"data":"Time"} ,
+            {"data":"Concepto"} ,
+            {"data":"Ingreso"} ,
+            {"data":"Gasto"} ,
+            {"data": "Descripcion" },
+          
+
+        ],
+
+       });
+
+
+    });
+
+
+        @*//Load Data function
+    function funcccc() {
+         $("td").remove();
+
+        var concep = $("#search").val();
+           var data = {concepto:concep};
+
+        $.ajax({
+            url: '@Url.Action("BusquedaGeneral")',
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(data),
+            success: function (data) {
+                $.each(data, function (index, value) {
+
+
+                    var customerRow = '<tr>' +
+                                        '<td>' + '<a href="/AddCajaChica/ES/'+ value.idCajaChica +'">' + value.cajaChica + '</a></td>' +
+                                        '<td>' + value.Time + '</td>' +
+                                        '<td>' + value.Concepto + '</td>' +
+                                        '<td>' + value.Ingreso + '</td>' +
+                                        '<td>' + value.Gasto + '</td>' +
+                                        '<td>' + value.Descripcion + '</td>' +
+                                        '</tr>';
+
+                                        $('#contenido').append(customerRow);
+
+
+                    //$("#contenido").append("<tr><td>" + "<a href="/AddCajaChica//ES/ +value.cajaChica + ">" + value.cajaChica + "  </a></td><td>" + value.Time + "</td><td>" + value.Concepto + "</td><td>" + value.Ingreso + "</td><td>" + value.Gasto + "</td><td>" + value.Descripcion + "</td></tr>");
+                });
+
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+    }
+
+    function getURL()
+    {
+        alert("Hola mundo");
+    }*@
+</script>

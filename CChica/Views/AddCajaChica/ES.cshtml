@@ -1,0 +1,286 @@
+﻿
+@{
+    var d = ViewBag.lista as CChica.Models.AddCajaChica;
+    var a = ViewBag.EG as IEnumerable<CChica.Models.CcConsultaChicaInv>;
+
+    ViewBag.Title = "Listado";
+
+
+
+    decimal ingreso = 0;
+    decimal ingresoConvert = 0;
+
+
+    decimal gastoConvert = 0;
+    decimal gasto = 0;
+
+
+    decimal Total = 0;
+
+
+
+}
+
+
+
+<h2>Detalles</h2>
+
+<div>
+    <div class="form-inline">
+        @if (ViewBag.Validacion == false)
+        {
+            if (ViewBag.Validar != 0)
+            {
+                <a href="@Url.Action("addIngreso", "CProc", new { indentityCC = d.IdentityCajaChica })" class="btn btn-primary">   <span class="glyphicon glyphicon-plus" aria-hidden="true"> Ingresar</span></a>
+            }
+            else
+            {
+                <a href="@Url.Action("addIngreso", "CProc", new { indentityCC = d.IdentityCajaChica })" class="btn btn-primary">   <span class="glyphicon glyphicon-plus" aria-hidden="true"> Aperturar Caja</span></a>
+            }
+
+            if (a.Count() != 0)
+            {
+                <a href="@Url.Action("addGasto","CProc",new {indentityCC=d.IdentityCajaChica})" class="btn btn-primary"> <span class="glyphicon glyphicon-minus" aria-hidden="true"> Gastos</span></a>
+            }
+
+            if (a.Count() != 0)
+            {
+                <a href="#" onclick="$('#basicModal').modal({'backdrop': 'static'});" class="btn btn-primary" data-target="#basicModal"> <span class="glyphicon glyphicon-folder-close" aria-hidden="true"> Cierre</span></a>
+
+
+            }
+        }
+
+
+        <a href="@Url.Action("Report","Report",new {id=d.IdentityCajaChica })" class="btn btn-primary">
+            <span class="glyphicon glyphicon-print" aria-hidden="true"> Imprimir</span>
+        </a>
+
+        <a href="@Url.Action("BusquedaGeneral")" class="btn btn-primary">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Busqueda general
+        </a>
+
+
+        <hr />
+        @using (Html.BeginForm())
+        {
+
+            <div class="form-group">
+                @Html.Label("Buscar: ")
+                @Html.TextBox("buscar", "", new { @class = "form-control" })
+                <button type="submit" class="btn btn-default">Buscar</button>
+            </div>
+
+
+
+        }
+    </div>
+
+
+    <hr />
+
+
+
+    <dl class="dl-horizontal">
+        <dt>
+
+            Codigo:
+        </dt>
+
+        <dd>
+            @d.IdentityCajaChica
+        </dd>
+
+        <dt>
+            Creado Por:
+        </dt>
+
+        <dd>
+            @d.CreadoPor
+        </dd>
+
+        <dt>
+
+            Validada:
+        </dt>
+
+
+        <dd>
+
+            @if (Convert.ToBoolean(d.Validada) == false)
+            {
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+
+            }
+            else
+            {
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            }
+        </dd>
+
+    </dl>
+
+
+    <div>
+        <table class="table">
+
+            <tr>
+
+                <th>
+                    Fecha
+                </th>
+                <th>
+                    Concepto
+                </th>
+                <th>
+                    Ingreso
+                </th>
+                <th>
+                    Gasto
+                </th>
+
+                <th>
+                    Descripción
+                </th>
+                @if (ViewBag.Validacion == false)
+                {
+                    <th></th>
+                }
+            </tr>
+
+
+
+
+            @foreach (var item in a)
+            {
+
+
+                <tr>
+
+
+                    <td>
+                        @item.Time
+                    </td>
+                    <td>
+                        @item.Concepto
+                    </td>
+                    <td>
+                        @Convert.ToDecimal(item.Ingreso).ToString("#,##0.00")
+                    <td>
+                        @Convert.ToDecimal(item.Gasto).ToString("#,##0.00")
+                    </td>
+
+
+                    <td>
+                        @item.Descripcion
+                    </td>
+                    @if (ViewBag.Validacion == false)
+                    {
+                        <td>
+
+                            <a href="@Url.Action("EditEgresoIngreso", new { id = item.id })">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </a>
+
+                            @if (Convert.ToInt32(ViewBag.PrimerId) != Convert.ToInt32(item.id) || ViewBag.Validar == 1)
+                            {
+
+                                <a href="@Url.Action("DeleteEgresiIngreso", new { id = item.id })">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </a>
+                            }
+
+                        </td>
+                    }
+                </tr>
+
+                ingresoConvert = Convert.ToDecimal(item.Ingreso);
+                ingreso = ingresoConvert + ingreso;
+
+                gastoConvert = Convert.ToDecimal(item.Gasto);
+                gasto = gastoConvert + gasto;
+
+                Total = ingreso - gasto;
+
+                TempData["total"] = Total;
+
+            }
+
+            <tr>
+                <td colspan="1">
+                    Total:
+                </td>
+                <td></td>
+                <td style="background-color: yellow; ">
+                    @ingreso.ToString("C")
+                </td>
+                <td style="background-color: yellow;">
+                    @gasto.ToString("C")
+                </td>
+                <td></td>
+                <td></td>
+
+            </tr>
+
+
+        </table>
+
+        <h2>
+            Disponible: <small style="
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 9px;
+    background: yellow;
+    border: solid yellow;
+    font-size: 27px;
+">@Total.ToString("C")</small>
+</h2>
+
+
+
+
+
+</div>
+
+</div>
+<div class="modal fade" id="basicModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="button" class="close" value="&times" data-dismiss="modal" aria-hidden="true" />
+                <h4 class="modal-title" id="myModalLabel">¿Desea validar la caja chica?</h4>
+            </div>
+
+
+
+            <div class="modal-body">
+
+                <!--Poner Login Mañana -->
+                @*<a href="@Url.Action("Login", "Account", new { returnUrl = "/CChica/?totalCierre=" + TempData["total"] + "&idCaja=" + d.IdentityCajaChica + "&validar=true" })" class="btn btn-primary">  Si </a>*@
+                <a href="@Url.Action("Login", "Account", new { returnUrl = "/AddCajaChica/Index?totalCierre=" + TempData["total"] + "&idCaja=" + d.IdentityCajaChica + "&validar=true" })" class="btn btn-primary">  Si </a>
+
+
+
+                &nbsp;
+
+
+                @*<a href="@Url.Action("Login", "Account", new { returnUrl = "/CChica/?totalCierre=" + TempData["total"] + "&idCaja=" + d.IdentityCajaChica + "&validar=false" })" class="btn btn-primary">  No </a>*@
+                <a href="@Url.Action("Login", "Account", new { returnUrl = "/AddCajaChica/Index?totalCierre=" + TempData["total"] + "&idCaja=" + d.IdentityCajaChica + "&validar=false" })" class="btn btn-primary">  No </a>
+
+
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+
+    <a href="@Url.Action("Index")" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver atrás </a>
+
+
+
+</div>

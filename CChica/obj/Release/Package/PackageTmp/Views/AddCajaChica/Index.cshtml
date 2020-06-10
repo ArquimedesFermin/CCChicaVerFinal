@@ -1,0 +1,424 @@
+﻿@model IEnumerable<CChica.Models.AddCajaChica>
+
+@{
+    ViewBag.Title = "Caja Chica";
+}
+
+
+<h2>Crear nueva caja chica</h2>
+
+
+@if (User.IsInRole("admin"))
+{
+    if (ViewBag.StatusMessage != "")
+    {
+
+
+        <div class="alert alert-success" id="aler" role="alert" style="
+    position: absolute;
+    z-index:1001;
+    width: 57%;
+
+    left: 22%;">@ViewBag.StatusMessage</div>
+}
+}
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Nueva caja chica  </a>
+
+    <a href="@Url.Action("BusquedaGeneral")" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Busqueda general  </a>
+
+</p>
+
+
+<hr />
+
+<div class="form-inline">
+    <label>Desde:</label>
+    <input name="min" id="min" class="form-control" type="text" data-date-format='dd/mm/yy'>
+    &nbsp;
+    <label>Hasta:</label>
+    <input name="max" id="max" class="form-control" type="text" data-date-format='dd/mm/yy'>
+</div>
+
+<hr />
+<table id="table-users" class="table table-responsive table-hover">
+
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdentityCajaChica)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nameCajaChica)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AperturaCaja)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreadoPor)
+            </th>
+            <th>
+
+                @Html.DisplayNameFor(model => model.CierreCaja)
+            </th>
+            <th>
+
+                @Html.DisplayNameFor(model => model.Validada)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.fecha)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @*@foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdentityCajaChica)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nameCajaChica)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.AperturaCaja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreadoPor)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CierreCaja)
+            </td>
+            <td>
+
+
+                @if (Convert.ToBoolean(item.Validada) == false)
+                {
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+
+                }
+                else
+                {
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                }
+            </td>*@
+
+
+    @*<td>
+
+                <a href="@Url.Action("Edit", new { id = item.Id })">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                </a>  |
+
+                <a href="@Url.Action("ES", "AddCajaChica", new { id = item.Id })">
+                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                </a>  |
+
+                <a href="@Url.Action("Delete", new { id = item.Id })">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                </a>  |
+
+                <a href="@Url.Action("Informacion", "AddCajaChica", new { id = item.Id })">
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                </a>
+
+            </td>
+
+        </tr>*@
+
+
+
+</table>
+
+@if (ViewBag.auten == false)
+{
+    <div class="modal fade" id="basicModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="button" class="close" value="&times" data-dismiss="modal" aria-hidden="true" />
+                    <h4 class="modal-title" id="myModalLabel">¿Desea validar la caja chica?</h4>
+                </div>
+
+
+                <div class="modal-body">
+
+                    <h4>Este usuario no tiene permiso para cerrar esta caja chica, Por favor contactar al usuario que alaboró esta Caja Chica   </h4>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@if (User.IsInRole("admin"))
+{
+    <hr>
+    <div>
+        <h2>Gestión de usuarios</h2>
+
+        @Html.ActionLink("Cambiar contraseña", "ChangePasswordAdmin", "Manage", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-default" })
+
+        &nbsp;
+
+        @Html.ActionLink("Registrar", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-default" })
+    </div>
+}
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        setTimeout(function () {
+            $("#aler").fadeOut(1500);
+        }, 3000);
+
+
+
+
+
+    });
+
+       $(document).ready(function () {
+      
+
+               $('#basicModal').modal('show');
+
+
+    });
+
+
+    $(document).ready(function () {
+        $.datepicker.setDefaults(
+
+            {
+         dateFormat: 'dd/mm/yy',
+         altFormat: 'dd/mm/yy',
+         dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+         monthNamesShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+         option: "disabled"
+
+
+            }
+        );
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+
+
+                //var min = $('#min').datepicker('getDate');
+               var min= $.datepicker.formatDate("d/mm/yy", $("#min").datepicker("getDate"));
+                if (min == "") { min = null; }
+                //var max = $('#max').datepicker('getDate');
+                var max = $.datepicker.formatDate("d/mm/yy", $('#max').datepicker('getDate'));
+
+                if (min == "") { min = null; }
+
+                if (max == "" && min != null)
+                {
+                    max = min;
+                }
+                else if (max == "")
+                {
+                    max = null;
+                }
+
+
+            var startDate = data[7];
+            if (min == null && max == null) { return true; }
+            if (min == null && startDate <= max) { return true;}
+            if(max == null && startDate >= min) {return true;}
+            if (startDate <= max && startDate >= min) { return true; }
+            return false;
+        }
+        );
+
+
+            $("#min").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+            $("#max").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true });
+          var table = $('#table-users').DataTable({
+        //     destroy: true,
+        //Responsive: true,
+          "order": [[ 0, "desc" ]],
+
+              language: {
+                  "decimal": ",",
+                  "thousands": ".",
+            "processing":     "Procesando...",
+            "search":         "Buscar&nbsp;:",
+            "lengthMenu":     "Mostrar _MENU_ registros",
+            "info":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "infoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "infoFiltered":   "(filtrado de un total de _MAX_ registros)",
+            "infoPostFix":    "",
+            "loadingRecords": "Cargando...",
+            "zeroRecords":    "No se encontraron resultados",
+            "emptyTable":     "Ningún dato disponible en esta tabla",
+            "paginate": {
+                "first":      "Primero",
+                "previous":   "Anterior",
+                "next":       "Siguiente",
+                "last":       "Último"
+            },
+            "aria": {
+                "sortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                "sortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        'ajax': {
+
+            "url": '@Url.Action("Indexd")',
+            "type": "POST",
+            "contentType": "application/json; charset=utf-8",
+            "dataType": "json",
+            "dataSrc":""
+
+
+        },
+         'columns':
+             [
+
+                 { "data": "Id" },
+                 { "data":"IdentityCajaChica"},
+            {"data":"nameCajaChica"} ,
+                 {
+                     "data": "AperturaCaja",
+                     "render": $.fn.dataTable.render.number( ',', '.', 2 )
+
+                 },
+            {"data":"CreadoPor"} ,
+                 {
+                     "data": "CierreCaja",
+                     "render": $.fn.dataTable.render.number( ',', '.', 2 )
+                 },
+                 {
+                     "data": "Validada",
+                      "order":false,
+                     "render": function (data, type, row)
+                     {
+                         if (row['Validada'] === true) {
+                             return '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>';
+                         }
+                         else
+                         {
+                             return '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
+
+                         }
+                     }
+                 },
+
+                 {
+                     "data": "fecha",
+                     "render": function(d) {
+                    var dateString = d.substr(6);
+var currentTime = new Date(parseInt(dateString ));
+var month = currentTime.getMonth() + 1;
+var day = currentTime.getDate();
+                         var year = currentTime.getFullYear();
+                         var date = day + "/" + month + "/" + year;
+                         return date;
+                     }
+                 },
+                 {
+                     "data": null,
+
+                     "render": function (data, type, full, meta) {
+                         //return '<a href="/AddCajaChica/Edit/' + full['Id'] + '">' + '<abbr title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></abbr>' + '</a>' + ' ' + '<a href="../AddCajaChica/ES/' + full['Id'] + '">' + '<abbr title="Detalles"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></abbr>' + '</a>'+ ' ' + '<a href="../AddCajaChica/Delete/' + full['Id'] + '">' + '<abbr title="Eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></abbr>' + '</a>'+ ' ' + '<a href="../AddCajaChica/Informacion/' + full['Id'] + '">' + '<abbr title="Información"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></abbr>' + '</a>';
+                         return '<a href="/CChica/AddCajaChica/Edit/' + full['Id'] + '">' + '<abbr title="Editar"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></abbr>' + '</a>' + ' ' + '<a href="../CChica/AddCajaChica/ES/' + full['Id'] + '">' + '<abbr title="Detalles"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></abbr>' + '</a>'+ ' ' + '<a href="../CChica/AddCajaChica/Delete/' + full['Id'] + '">' + '<abbr title="Eliminar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></abbr>' + '</a>'+ ' ' + '<a href="../CChica/AddCajaChica/Informacion/' + full['Id'] + '">' + '<abbr title="Información"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></abbr>' + '</a>';
+
+                     }
+
+                 }
+
+        ],
+
+       });
+
+            // Event listener to the two range filtering inputs to redraw on input
+            $('#min, #max').change(function () {
+                table.draw();
+            });
+        });
+
+    @*$(document).ready(function () {
+
+
+       $('#table-users').DataTable({
+        //     destroy: true,
+        //Responsive: true,
+
+
+
+
+
+
+        'ajax': {
+
+            "url": '@Url.Action("Indexd")',
+            "type": "POST",
+            "contentType": "application/json; charset=utf-8",
+            "dataType": "json",
+            "dataSrc":""
+
+
+        },
+         'columns':
+        [
+            { "data":"IdentityCajaChica"},
+            {"data":"nameCajaChica"} ,
+            {"data":"AperturaCaja"} ,
+            {"data":"CreadoPor"} ,
+            {"data":"CierreCaja"} ,
+            { "data": "Validada" },
+            {"data":"fecha"}
+
+        ],
+
+       });
+
+
+    });*@
+
+
+
+
+
+
+
+</script>

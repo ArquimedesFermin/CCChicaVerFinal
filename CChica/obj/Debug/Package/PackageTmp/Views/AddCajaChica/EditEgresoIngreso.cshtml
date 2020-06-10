@@ -1,0 +1,102 @@
+﻿@model CChica.Models.EgresoIngreso
+
+@{
+    ViewBag.Title = "EditEgresoIngreso";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        @*<div class="form-group">
+        @Html.LabelFor(model => model.IdCajaChica, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">*@
+        @Html.EditorFor(model => model.IdCajaChica, new { htmlAttributes = new { @type = "hidden", @class = "form-control" } })
+        
+        @*@Html.ValidationMessageFor(model => model.IdCajaChica, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Dinero, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Dinero, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Dinero, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @if (ViewBag.ConsultaCount != Model.Id)
+        {
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdEstado, "IdEstado", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.IdEstado, new SelectList(ViewBag.estados, "Id", "Estado"), "- Selecciona el tipo de estado", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdEstado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+        else
+        {
+            @*<div class="form-group">
+            @Html.LabelFor(model => model.IdEstado, "IdEstado", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">*@
+            @Html.TextBoxFor(m => m.IdEstado, "", new { @type = "hidden", @class = "form-control" })
+            @*@Html.ValidationMessageFor(model => model.IdEstado, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        }
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Fecha, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Time, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Time, "{0:hh:mm}", new { @type = "time", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Concepto, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Concepto, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Concepto, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+
+    <a href="@Url.Action("ES",new { id = ViewBag.Id })" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver atrás </a>
+
+
+</div>

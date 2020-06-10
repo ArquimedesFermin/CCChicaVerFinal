@@ -1,0 +1,33 @@
+﻿body {
+    margin: 0px,0px,0px,0px;
+   
+    
+}
+
+
+.gruposOpciones {
+    margin-left: 36%;
+    width: 29.1%;
+}
+
+
+#sidebar-wrapper {
+    background-color: #222;
+}
+
+.navbar-inverse {
+  
+    border-color: gray;
+}
+
+.logo {
+    left: 73px;
+    color: gray;
+    position: relative;
+}
+
+.linea {
+    margin-top: -8px;
+    border-top: 1px solid gray;
+}
+
